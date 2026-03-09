@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+        VERSION 3 – Configuration Spring par XML
+        Spring lit ce fichier, instancie les beans, et injecte les dépendances
+        automatiquement. Plus besoin d'écrire du code de réflexion manuellement.
+    -->
+
+    <!-- Définition du bean DAO (Version Base de Données) -->
+    <bean id="dao" class="net.ayoub.dao.DaoImpl"/>
+
+    <!-- Pour utiliser la version Capteur, il suffit de décommenter : -->
+    <!-- <bean id="dao" class="net.ayoub.dao.DaoImplV2"/> -->
+
+    <!--
+        Définition du bean Métier avec injection via SETTER.
+        La propriété "dao" correspond au setter setDao(IDao dao).
+        ref="dao" référence le bean déclaré ci-dessus.
+    -->
+    <bean id="metier" class="net.ayoub.metier.MetierImpl">
+        <property name="dao" ref="dao"/>
+    </bean>
+
+    <!--
+        Alternative : injection via CONSTRUCTEUR.
+        Décommenter ce bloc et commenter le bloc setter ci-dessus.
+    -->
+    <!--
+    <bean id="metier" class="net.ayoub.metier.MetierImpl">
+        <constructor-arg ref="dao"/>
+    </bean>
+    -->
+
+</beans>
