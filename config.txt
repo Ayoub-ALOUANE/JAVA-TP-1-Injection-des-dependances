@@ -1,0 +1,2 @@
+net.ayoub.dao.DaoImpl
+net.ayoub.metier.MetierImpl
