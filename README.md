@@ -6,7 +6,7 @@
 
 ---
 
-## 📌 Contexte et Objectifs
+##  Contexte et Objectifs
 
 Ce TP a pour objectif d'implémenter le principe d'**Inversion de Contrôle (IoC)** et de l'**Injection de Dépendances (DI)** en Java, en passant progressivement par quatre approches :
 
@@ -17,7 +17,7 @@ Ce TP a pour objectif d'implémenter le principe d'**Inversion de Contrôle (IoC
 
 ---
 
-## 🧠 Fondements Théoriques
+##  Fondements Théoriques
 
 ### Inversion de Contrôle (IoC)
 L'IoC est un patron de conception qui délègue au **framework** la responsabilité de créer les objets, de gérer leur cycle de vie et d'injecter leurs dépendances. Le développeur se concentre uniquement sur la **logique métier**.
@@ -38,7 +38,7 @@ Pour respecter ce principe, on utilise le **couplage faible** : les classes dép
 
 ---
 
-## 🏗️ Architecture du Projet
+##  Architecture du Projet
 
 L'application est découpée en **trois couches** selon le patron MVC :
 
@@ -74,7 +74,7 @@ L'application est découpée en **trois couches** selon le patron MVC :
 
 ---
 
-## 📐 Diagramme de Classes
+##  Diagramme de Classes
 
 ```
         «interface»                  «interface»
@@ -94,7 +94,7 @@ getData()         getData()         - dao : IDao  ← couplage faible
 
 ---
 
-## 🔧 Détail des Implémentations
+##  Détail des Implémentations
 
 ### Interface `IDao`
 Définit le contrat de la couche DAO. Toute source de données (BD, capteur, web service…) doit implémenter cette interface.
@@ -154,7 +154,7 @@ public interface IMetier {
 
 ---
 
-### `MetierImpl` – Couplage Faible ⭐
+### `MetierImpl` – Couplage Faible 
 L'attribut `dao` est de type **IDao (interface)** et n'est **jamais initialisé avec `new`**. C'est le cœur du couplage faible.
 
 ![MetierImpl.java](screens/Metierlmpl_java.png)
@@ -185,15 +185,15 @@ public class MetierImpl implements IMetier {
 }
 ```
 
-> ⚠️ **Attention** : Si on appelle `calcul()` sans avoir injecté `dao`, Java lance une `NullPointerException` car `dao` vaut `null` par défaut.
+>  **Attention** : Si on appelle `calcul()` sans avoir injecté `dao`, Java lance une `NullPointerException` car `dao` vaut `null` par défaut.
 
 ---
 
-## 🚀 Les 4 Versions d'Injection
+##  Les 4 Versions d'Injection
 
 ---
 
-### ✅ Version 1 – Instanciation Statique
+###  Version 1 – Instanciation Statique
 
 Le développeur utilise manuellement `new` dans la couche Présentation.
 
@@ -220,7 +220,7 @@ System.out.println(metier2.calcul());
 
 ---
 
-### ✅ Version 2 – Instanciation Dynamique (Réflexion Java)
+###  Version 2 – Instanciation Dynamique (Réflexion Java)
 
 Les noms des classes sont lus depuis un fichier texte (`config.txt`). Le mot-clé `new` **n'est plus utilisé**.
 
@@ -253,7 +253,7 @@ IMetier metier = (IMetier) cMetier.getConstructor(IDao.class).newInstance(dao);
 
 ---
 
-### ✅ Version 3 – Spring Framework (Configuration XML)
+###  Version 3 – Spring Framework (Configuration XML)
 
 Spring fait **tout le travail de réflexion automatiquement** d'après le fichier `config.xml`.
 
@@ -277,7 +277,7 @@ Spring fait **tout le travail de réflexion automatiquement** d'après le fichie
 
 ---
 
-### ✅ Version 4 – Spring Framework (Annotations)
+###  Version 4 – Spring Framework (Annotations)
 
 Le fichier XML est **totalement supprimé**. Les annotations remplacent la configuration.
 
@@ -298,7 +298,7 @@ Le fichier XML est **totalement supprimé**. Les annotations remplacent la confi
 
 ---
 
-## 📊 Tableau Comparatif des 4 Versions
+##  Tableau Comparatif des 4 Versions
 
 | Critère | Version 1 | Version 2 | Version 3 | Version 4 |
 |---|---|---|---|---|
@@ -311,7 +311,7 @@ Le fichier XML est **totalement supprimé**. Les annotations remplacent la confi
 
 ---
 
-## ▶️ Exécution du Projet
+##  Exécution du Projet
 
 ### Prérequis
 - Java 17 (JDK)
@@ -351,18 +351,18 @@ Résultat : 18.333333333333336
 
 ---
 
-## 🔄 Passer à la Version Capteur (DaoImplV2)
+##  Passer à la Version Capteur (DaoImplV2)
 
 | Version | Modification à effectuer | Recompilation ? |
 |---|---|---|
-| **V1** | Changer `new DaoImpl()` → `new DaoImplV2()` | ✅ Oui |
-| **V2** | `config.txt` ligne 1 : `net.ayoub.dao.DaoImplV2` | ❌ Non |
-| **V3** | `config.xml` : `class="net.ayoub.dao.DaoImplV2"` | ❌ Non |
-| **V4** | `@Qualifier("daoV2")` dans `MetierImpl` | ✅ Oui (recompile MetierImpl) |
+| **V1** | Changer `new DaoImpl()` → `new DaoImplV2()` |  Oui |
+| **V2** | `config.txt` ligne 1 : `net.ayoub.dao.DaoImplV2` |  Non |
+| **V3** | `config.xml` : `class="net.ayoub.dao.DaoImplV2"` |  Non |
+| **V4** | `@Qualifier("daoV2")` dans `MetierImpl` |  Oui (recompile MetierImpl) |
 
 ---
 
-## 💡 Concepts Clés à Retenir
+##  Concepts Clés à Retenir
 
 - **Couplage faible** = dépendre d'une **interface**, jamais d'une classe concrète
 - **Injection de dépendance** = fournir à un objet ses dépendances de l'extérieur (pas de `new` dans la couche métier)
